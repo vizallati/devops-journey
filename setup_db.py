@@ -1,4 +1,5 @@
 import mysql.connector
+from loguru import logger
 
 
 def establish_connection():
@@ -7,44 +8,37 @@ def establish_connection():
         'password': 'my-secret-pw',
         'host': 'localhost'
     }
-    connection = mysql.connector.connect(**config)
-    return connection
+    return mysql.connector.connect(**config)
 
-connection  = establish_connection()
-cursor = connection.cursor(dictionary=True)
+def create_database(db_name='devops_journey'):
+    connection = establish_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("CREATE DATABASE IF NOT EXISTS devops_journey")
+    cursor.execute(f"USE {db_name}")
+    connection.commit()
+    cursor.close()
+    connection.close()
+    logger.info(f"Table: {db_name} successfully created!")
 
-# Create database
-cursor.execute("CREATE DATABASE IF NOT EXISTS devops_journey")
-cursor.execute("USE devops_journey")
+def create_table(table_name='timeline'):
+    connection = establish_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute(f"""
+        CREATE TABLE IF NOT EXISTS {table_name} (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            image_url VARCHAR(255),
+            date_range VARCHAR(50),
+            description TEXT,
+            side ENUM('left', 'right')
+        )
+    """)
+    connection.commit()
+    cursor.close()
+    connection.close()
+    logger.info(f"Table: {table_name} successfully created")
 
-# Create table
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS timeline (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
-        image_url VARCHAR(255),
-        date_range VARCHAR(50),
-        description TEXT,
-        side ENUM('left', 'right')
-    )
-""")
 
-# Insert sample data
-timeline_entries = [
-    ('Docker', 'https://img.icons8.com/?size=100&id=39292&format=png&color=000000', '2018 - 2019', 'Learned about Docker. Stuff like what is Docker, why Docker', 'left'),
-    ('Linux System Administration', 'https://img.icons8.com/?size=100&id=17842&format=png&color=000000', '2018 - 2019', 'Learned about Linux System Administration. Stuff like managing servers, configurations', 'right')
-]
-
-cursor.executemany("""
-    INSERT INTO timeline (title, image_url, date_range, description, side)
-    VALUES (%s, %s, %s, %s, %s)
-""", timeline_entries)
-
-# Commit the transaction
-connection.commit()
-
-# Close the connection
-cursor.close()
-connection.close()
-
-print("Database and table setup complete with sample data inserted.")
+if __name__=="__main__":
+    create_database()
+    create_table()
