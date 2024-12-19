@@ -23,6 +23,7 @@ def create_database(db_name='devops_journey'):
 def create_table(table_name='timeline'):
     connection = establish_connection()
     cursor = connection.cursor(dictionary=True)
+    cursor.execute("USE devops_journey")
     cursor.execute(f"""
         CREATE TABLE IF NOT EXISTS {table_name} (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -30,7 +31,8 @@ def create_table(table_name='timeline'):
             image_url VARCHAR(255),
             date_range VARCHAR(50),
             description TEXT,
-            side ENUM('left', 'right')
+            side ENUM('left', 'right'),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
     connection.commit()

@@ -1,5 +1,6 @@
 from setup_db import establish_connection
 from loguru import logger
+
 def get_timeline_data():
     try:
         connection = establish_connection()
@@ -15,6 +16,26 @@ def get_timeline_data():
         return rows
     except Exception as err:
         logger.info(f"Error: {err}")
+
+
+def get_recent_timeline_entries(limit=5):
+    connection = establish_connection()
+    cursor = connection.cursor(dictionary=True)
+    try:
+        cursor.execute("USE devops_journey")
+
+        cursor.execute("""
+            SELECT * FROM timeline ORDER BY created_at DESC LIMIT %s
+        """, (limit,))
+        recent_entries = cursor.fetchall()
+        return recent_entries
+    except Exception as err:
+        logger.info(f"Error: {err}")
+        return []
+    finally:
+        cursor.close()
+        connection.close()
+
 
 def add_timeline_entry(entry):
     connection = establish_connection()

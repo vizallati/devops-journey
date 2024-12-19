@@ -1,0 +1,94 @@
+body {
+    background-color: #1e1e1e;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.terminal {
+    width: 400px;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.terminal-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid #00ff00;
+}
+
+.terminal-title {
+    margin-left: 10px;
+    color: #00ff00;
+    font-weight: bold;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin-right: 5px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.red {
+    background-color: #ff605c;
+}
+
+.yellow {
+    background-color: #ffbd44;
+}
+
+.green {
+    background-color: #00ca4e;
+}
+
+.terminal-body {
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input {
+    background-color: #1e1e1e;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    border-radius: 3px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #00ff00;
+}
+
+button {
+    background-color: #00ff00;
+    color: #000;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #00ca4e;
+}
