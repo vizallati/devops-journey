@@ -1,13 +1,19 @@
 import hashlib
-from flask import Flask, render_template, request, redirect, url_for
+import os
+from flask import Flask, render_template, request, redirect, url_for, session
+from app_utils import check_user_auth
 from data import get_timeline_data, add_timeline_entry, get_recent_timeline_entries
 from loguru import logger
 
+
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+app.secret_key = os.urandom(24)
 
 @app.route('/')
-def timeline():
-    timeline_data = get_timeline_data()
+def devops_timeline():
+    timeline_data = get_timeline_data(timeline='devops')
     return render_template('devops-timeline.html', timeline_data=timeline_data)
 
 @app.route('/add-timeline-entry', methods=['POST'])
@@ -17,24 +23,33 @@ def add_entry():
     request_data = []
     for k,v in entry_data.items():
         request_data.append(v)
-    add_timeline_entry(request_data)
-    return "Timeline entry successfully added"
+    add_timeline_entry(request_data, timeline=entry_data['timeline'])
+    return f"{entry_data['timeline']} timeline entry successfully added"
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    session['loggedin'] = False
     if request.method == 'GET':
         return render_template('login.html', msg='')
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
-        # Retrieve the hashed password
-        # hash = password + app.secret_key
-        # hash = hashlib.sha1(hash.encode())
-        # password = hash.hexdigest()
-        return redirect(url_for('dashboard'))
+        if username and password == "allati":
+            session['loggedin'] = True
+            session['username'] = username
+            return redirect(url_for('dashboard'))
+        else:
+            return "Wrong username or password"
+
+@app.route('/test-automation-journey')
+def aqa_timeline():
+    timeline_data = get_timeline_data(timeline='aqa')
+    return render_template('aqa-timeline.html', timeline_data=timeline_data)
 
 @app.route('/dashboard')
 def dashboard():
+    if not check_user_auth():
+        return redirect(url_for('login'))
     timeline_entries = get_timeline_data()
     recent_timeline_data = get_recent_timeline_entries()
     total_timeline_entries = len(timeline_entries)

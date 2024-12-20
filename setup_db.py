@@ -1,7 +1,7 @@
 import time
-
 import mysql.connector
 from loguru import logger
+
 
 
 def establish_connection():
@@ -22,7 +22,9 @@ def create_database(db_name='devops_journey'):
     connection.close()
     logger.info(f"Table: {db_name} successfully created!")
 
-def create_table(table_name='timeline'):
+def create_table(timeline):
+    table_name = f'{timeline}_timeline'
+    logger.info(f'table name is: {table_name}')
     connection = establish_connection()
     cursor = connection.cursor(dictionary=True)
     cursor.execute("USE devops_journey")
@@ -47,4 +49,5 @@ if __name__=="__main__":
     logger.info("Waiting 15 seconds for Database to initialize...")
     time.sleep(15)
     create_database()
-    create_table()
+    create_table(timeline='devops')
+    create_table(timeline='aqa')

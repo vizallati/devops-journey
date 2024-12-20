@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test-automation-journey</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="timeline">
+    {% for entry in timeline_data %}
+    <div class="container {{ entry.side }}-container">
+        <img src="{{ entry.image_url }}" alt="{{ entry.title }}">
+        <div class="timeline-content">
+            <h2>{{ entry.title }}</h2>
+            <small>{{ entry.date_range }}</small>
+            <p>{{ entry.description }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</body>
+</html>
