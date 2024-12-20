@@ -10,6 +10,6 @@ jobs:
       - name: Install dependencies
         run: sudo chmod +x /usr/local/bin/docker-compose
       - name: Deploy web app
-        run: docker-compose up
+        run: docker-compose up -d
       - name: Check state of web app
         run: curl localhost:5000
