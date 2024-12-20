@@ -15,5 +15,7 @@ jobs:
         run: sudo ufw allow 5000
       - name: Wait for server to be fully initialized
         run: sleep 30
-      - name: Check web server
+      - name: Checking / endpoint
         run: curl localhost:5000
+      - name: Checking /test-automation-journey endpoint
+        run: curl localhost:5000/test-automation-journey
