@@ -12,4 +12,4 @@ jobs:
       - name: Deploy web app
         run: docker-compose up -d
       - name: Check state of web app
-        run: curl localhost:5000
+        run: curl http://web_app:5000
