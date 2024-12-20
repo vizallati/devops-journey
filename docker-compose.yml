@@ -1,8 +1,9 @@
 version: "3"
 
 services:
-  database:
+  db:
     image: mysql
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: "my-secret-pw"
     ports:
@@ -11,7 +12,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: web_app
     ports:
       - "5000:5000"
     depends_on:
-      - database
+      - db
