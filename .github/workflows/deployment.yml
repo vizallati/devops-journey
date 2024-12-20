@@ -11,5 +11,7 @@ jobs:
         run: sudo chmod +x /usr/local/bin/docker-compose
       - name: Deploy web app
         run: docker-compose up -d
+      - name: Check container ip
+        run: docker inspect web_app
       - name: Check state of web app
         run: curl http://web_app:5000
