@@ -1,3 +1,5 @@
+import time
+
 import mysql.connector
 from loguru import logger
 
@@ -6,7 +8,7 @@ def establish_connection():
     config = {
         'user': 'root',
         'password': 'my-secret-pw',
-        'host': 'localhost'
+        'host': 'db'
     }
     return mysql.connector.connect(**config)
 
@@ -42,5 +44,7 @@ def create_table(table_name='timeline'):
 
 
 if __name__=="__main__":
+    logger.info("Waiting 15 seconds for Database to initialize...")
+    time.sleep(15)
     create_database()
     create_table()
