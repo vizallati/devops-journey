@@ -1,0 +1,11 @@
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy web app
+        run: docker-compose up
+      - name: Check state of web app
+        run: curl localhost:5000
