@@ -11,15 +11,21 @@ jobs:
         run: sudo chmod +x /usr/local/bin/docker-compose
       - name: Deploy web app
         run: docker-compose up -d
-      - name: Get container IP
-        id: get-ip
-        run: |
-          CONTAINER_ID=$(docker-compose ps -q web_app)
-          CONTAINER_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $CONTAINER_ID)
-          echo "CONTAINER_IP=$CONTAINER_IP" >> $GITHUB_ENV
-      - name: Check state of web app
-        run: |
-          echo "Checking if the web app is running..."
-          for i in {1..10}; do
-            curl -sSf http://${{ env.CONTAINER_IP }}:5000 && break || sleep 10
-          done
+      - name: Expose port
+        run: sudo ufw allow 5000
+      - name: Wait for server
+        run: sleep 10
+      - name: Check web server
+        run: curl localhost:5000
+#      - name: Get container IP
+#        id: get-ip
+#        run: |
+#          CONTAINER_ID=$(docker-compose ps -q web_app)
+#          CONTAINER_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $CONTAINER_ID)
+#          echo "CONTAINER_IP=$CONTAINER_IP" >> $GITHUB_ENV
+#      - name: Check state of web app
+#        run: |
+#          echo "Checking if the web app is running..."
+#          for i in {1..10}; do
+#            curl -sSf http://${{ env.CONTAINER_IP }}:5000 && break || sleep 10
+#          done
