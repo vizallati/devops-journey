@@ -1,12 +1,13 @@
 
 
 body {
-    background: #2e364a;
+    background: #ccc;
 }
 .timeline {
     position: relative;
     max-width: 1200px;
     margin: 100px auto;
+    background #2e364a:
 }
 .container {
     position: relative;
@@ -57,4 +58,10 @@ body {
     left: 50%;
     margin-left: -3px;
     z-index: -1;
+}
+
+.top {
+	position: relative;
+	height: 100px;
+	background: rgb(38, 132, 255);;
 }

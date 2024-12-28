@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+<div class='top'></div>
+<header>
+    <p>Filter:</p>
+
+
+</header>
 <div class="timeline">
     {% for entry in timeline_data %}
     <div class="container {{ entry.side }}-container">

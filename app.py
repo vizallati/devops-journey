@@ -50,8 +50,8 @@ def aqa_timeline():
 def dashboard():
     if not check_user_auth():
         return redirect(url_for('login'))
-    timeline_entries = get_timeline_data()
-    recent_timeline_data = get_recent_timeline_entries()
+    timeline_entries = get_timeline_data('devops')
+    recent_timeline_data = get_recent_timeline_entries('devops')
     total_timeline_entries = len(timeline_entries)
     return render_template('dashboard.html',
                            recent_timeline_data=recent_timeline_data,
