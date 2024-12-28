@@ -18,14 +18,14 @@ def get_timeline_data(timeline):
         logger.info(f"Error: {err}")
 
 
-def get_recent_timeline_entries(limit=5):
+def get_recent_timeline_entries(timeline, limit=5):
     connection = establish_connection()
     cursor = connection.cursor(dictionary=True)
     try:
         cursor.execute("USE devops_journey")
-
-        cursor.execute("""
-            SELECT * FROM timeline ORDER BY created_at DESC LIMIT %s
+        logger.info(f"Getting recent entries from {timeline}_timeline")
+        cursor.execute(f"""
+            SELECT * FROM {timeline}_timeline ORDER BY created_at DESC LIMIT %s
         """, (limit,))
         recent_entries = cursor.fetchall()
         return recent_entries
