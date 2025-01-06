@@ -17,3 +17,12 @@ services:
       - "5000:5000"
     depends_on:
       - db
+  nginx:
+    image: nginx
+    container_name: nginx_reverse_proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - web_app
