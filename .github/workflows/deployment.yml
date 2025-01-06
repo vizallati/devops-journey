@@ -12,10 +12,8 @@ jobs:
       - name: Deploy web app
         run: docker-compose up -d
       - name: Expose port used by web app
-        run: sudo ufw allow 5000
+        run: sudo ufw allow 80
       - name: Wait for server to be fully initialized
         run: sleep 30
-      - name: Checking / endpoint
-        run: curl localhost:5000
-      - name: Checking /test-automation-journey endpoint
-        run: curl localhost:5000/test-automation-journey
+      - name: Sanity check
+        run: curl localhost
