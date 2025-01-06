@@ -11,7 +11,13 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = os.urandom(24)
 
+
+
 @app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/devops-journey')
 def devops_timeline():
     timeline_data = get_timeline_data(timeline='devops')
     return render_template('devops-timeline.html', timeline_data=timeline_data)
