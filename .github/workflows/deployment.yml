@@ -12,8 +12,8 @@ jobs:
       - name: Deploy web app
         run: docker-compose up -d
       - name: Expose port used by web app
-        run: sudo ufw allow 80
+        run: sudo ufw allow 5000
       - name: Wait for server to be fully initialized
         run: sleep 30
       - name: Sanity check
-        run: curl localhost
+        run: curl localhost:5000
