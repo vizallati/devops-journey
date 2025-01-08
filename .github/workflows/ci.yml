@@ -22,7 +22,7 @@ jobs:
       - name: Check files present
         run: ls -la
       - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v1.2.0
+        uses: appleboy/ssh-action@v0.0.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_SSH_USER }}
