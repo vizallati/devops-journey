@@ -27,5 +27,5 @@ jobs:
         run: echo ${{ secrets.EC2_SSH_KEY }} > ~/.ssh/id_ed25519
       - name: test connection
         run: |
-          ssh ${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_HOST }}
+          ssh ubuntu@blog.vizallati.guru
           pwd
