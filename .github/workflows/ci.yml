@@ -26,7 +26,7 @@ jobs:
       - name: get env
         run: printenv
       - name: move key
-        run: echo $EC2_SSH_KEY > ~/.ssh/id_ed25519
+        run: echo {{ env.EC2_SSH_KEY }} > ~/.ssh/id_ed25519
       - name: Set permissions for private key file
         run: chmod 600 ~/.ssh/id_ed25519
       - name: Check key file
