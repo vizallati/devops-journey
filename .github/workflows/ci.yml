@@ -5,28 +5,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Download dependencies
-        run: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-      - name: Install dependencies
-        run: sudo chmod +x /usr/local/bin/docker-compose
-      - name: Deploy web app
-        run: docker-compose up -d
-      - name: Expose port used by web app
-        run: sudo ufw allow 5000
-      - name: Wait for server to be fully initialized
-        run: sleep 30
-      - name: Sanity check
-        run: curl localhost:5000
+#      - name: Download dependencies
+#        run: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+##      - name: Install dependencies
+#        run: sudo chmod +x /usr/local/bin/docker-compose
+#      - name: Deploy web app
+#        run: docker-compose up -d
+#      - name: Expose port used by web app
+#        run: sudo ufw allow 5000
+#      - name: Wait for server to be fully initialized
+#        run: sleep 30
+#      - name: Sanity check
+#        run: curl localhost:5000
       - name: Get WD
         run: pwd
       - name: Check files present
         run: ls -la
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
-        with:
-          host: blog.vizallati.guru
-          username: ${{ secrets.EC2_SSH_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: ${{ secrets.EC2_SSH_PORT }}
-          script: |
-            pwd
+      - name: create .ssh dirctory
+        run: mkdir ~/.ssh
+      - name: move key
+        run: echo ${{ secrets.EC2_SSH_KEY }} > ~/.ssh/id_ed25519
+      - name: test connection
+        run: |
+          ssh ${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_HOST }}
+          pwd
