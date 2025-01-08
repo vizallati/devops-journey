@@ -28,7 +28,7 @@ jobs:
       - name: Set permissions for private key file
         run: chmod 600 ~/.ssh/id_ed25519
       - name: Check key file
-        run: openssl rsa -in /home/runner/.ssh/id_ed25519 -noout -text
+        run: cat /home/runner/.ssh/id_ed25519
       - name: test connection
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@blog.vizallati.guru
