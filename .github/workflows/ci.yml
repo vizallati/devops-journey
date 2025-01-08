@@ -17,3 +17,16 @@ jobs:
         run: sleep 30
       - name: Sanity check
         run: curl localhost:5000
+      - name: Get WD
+        run: pwd
+      - name: Check files present
+        run: ls -la
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_SSH_HOST }}
+          username: ${{ secrets.EC2_SSH_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_SSH_PORT }}
+          script: |
+            pwd
