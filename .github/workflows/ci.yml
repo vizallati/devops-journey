@@ -23,6 +23,8 @@ jobs:
         run: ls -la
       - name: create .ssh dirctory
         run: mkdir ~/.ssh
+      - name: get env
+        run: printenv
       - name: move key
         run: echo ${{ EC2_SSH_KEY }} > ~/.ssh/id_ed25519
       - name: Set permissions for private key file
