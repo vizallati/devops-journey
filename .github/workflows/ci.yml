@@ -19,19 +19,12 @@ jobs:
 #        run: curl localhost:5000
       - name: Get WD
         run: pwd
-      - name: Check files present
-        run: ls -la
-      - name: create .ssh dirctory
-        run: mkdir ~/.ssh
       - name: get env
-        run: printenv
-      - name: move key
-        run: echo ${{ vars.EC2_SSH_KEY }}" | base64 --decode > ~/.ssh/id_ed25519
-      - name: Set permissions for private key file
-        run: chmod 600 ~/.ssh/id_ed25519
-      - name: Check key file
-        run: cat /home/runner/.ssh/id_ed25519
-      - name: test connection
-        run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@blog.vizallati.guru
-          pwd
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.EC2_SSH_HOST }}
+          username: ${{ vars.EC2_SSH_USER }}
+          key: ${{ vars.EC2_SSH_KEY }}
+          port: ${{ vars.EC2_SSH_PORT }}
+          script: |
+            pwd
