@@ -34,4 +34,5 @@ jobs:
       - name: Wait for server to be fully initialized on ec2
         run: sleep 30
       - name: Sanity check on ec3
-        run: curl blog.vizallati.guru
+        run: while ! curl -s https://blog.vizallati.guru | grep -q "Home"; do sleep 10; done
+
