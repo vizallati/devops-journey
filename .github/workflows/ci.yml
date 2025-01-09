@@ -24,9 +24,10 @@ jobs:
           username: ${{ vars.EC2_SSH_USER }}
           key: ${{ vars.EC2_SSH_KEY }}
           port: ${{ vars.EC2_SSH_PORT }}
-          env: $GITHUB_HEAD_REF
+          envs: $GITHUB_HEAD_REF
           script: |
             sudo rm -rf devops-journey
             git clone -b $GITHUB_HEAD_REF --single-branch https://github.com/vizallati/devops-journey.git
+            cd devops-journey
             sudo docker-compose down
             sudo docker-compose up
