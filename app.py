@@ -63,5 +63,9 @@ def dashboard():
                            recent_timeline_data=recent_timeline_data,
                            total_timeline_entries=total_timeline_entries)
 
+@app.route('/projects')
+def projects():
+    return render_template('projects.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

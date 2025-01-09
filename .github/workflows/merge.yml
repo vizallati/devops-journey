@@ -1,0 +1,32 @@
+name: CI deployment to production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy webapp on EC2 Instance
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.EC2_SSH_HOST }}
+          username: ${{ vars.EC2_SSH_USER }}
+          key: ${{ vars.EC2_SSH_KEY }}
+          port: ${{ vars.EC2_SSH_PORT }}
+          envs: GITHUB_HEAD_REF
+          script: |
+            sudo rm -rf devops-journey
+            git clone https://github.com/vizallati/devops-journey.git
+            cd devops-journey
+            sudo docker-compose down
+            sudo docker system prune -af
+            sudo docker images
+            sudo docker-compose up -d
+      - name: Wait for server to be fully initialized on ec2
+        run: sleep 30
+      - name: Sanity check on ec3
+        run: curl -s -o /dev/null -w "%{http_code}" https://blog.vizallati.guru | grep -q "^200$" || exit 1
