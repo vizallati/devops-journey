@@ -5,21 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-#      - name: Download dependencies
-#        run: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-##      - name: Install dependencies
-#        run: sudo chmod +x /usr/local/bin/docker-compose
-#      - name: Deploy web app
-#        run: docker-compose up -d
-#      - name: Expose port used by web app
-#        run: sudo ufw allow 5000
-#      - name: Wait for server to be fully initialized
-#        run: sleep 30
-#      - name: Sanity check
-#        run: curl localhost:5000
-      - name: Get WD
-        run: pwd
-      - name: get env
+      - name: Download dependencies
+        run: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      - name: Install dependencies
+        run: sudo chmod +x /usr/local/bin/docker-compose
+      - name: Deploy web app
+        run: docker-compose up -d
+      - name: Expose port used by web app
+        run: sudo ufw allow 5000
+      - name: Wait for server to be fully initialized
+        run: sleep 30
+      - name: Sanity check
+        run: curl localhost:5000
+      - name: Deploy service on EC2 Instance
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ vars.EC2_SSH_HOST }}
@@ -27,4 +25,7 @@ jobs:
           key: ${{ vars.EC2_SSH_KEY }}
           port: ${{ vars.EC2_SSH_PORT }}
           script: |
-            pwd
+            scp /home/runner/work/devops-journey/devops-journey ${{ vars.EC2_SSH_USER }}@${{ vars.EC2_SSH_HOST }}:/home/user/devops-journey
+            cd /home/user/devops-journey
+            sudo docker-compose down
+            sudo docker-compose up
