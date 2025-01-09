@@ -9,15 +9,15 @@ jobs:
         run: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       - name: Install dependencies
         run: sudo chmod +x /usr/local/bin/docker-compose
-      - name: Deploy web app
+      - name: Deploy webapp on runner node
         run: docker-compose up -d
       - name: Expose port used by web app
         run: sudo ufw allow 5000
-      - name: Wait for server to be fully initialized
-        run: sleep 30
-      - name: Sanity check
+      - name: Wait for server to be fully initialized on runner node
+        run: sleep 10
+      - name: Sanity check on runner node
         run: curl localhost:5000
-      - name: Deploy service on EC2 Instance
+      - name: Deploy webapp on EC2 Instance
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ vars.EC2_SSH_HOST }}
@@ -30,4 +30,8 @@ jobs:
             git clone -b $GITHUB_HEAD_REF --single-branch https://github.com/vizallati/devops-journey.git
             cd devops-journey
             sudo docker-compose down
-            sudo docker-compose up
+            sudo docker-compose up -d
+      - name: Wait for server to be fully initialized on ec2
+        run: sleep 10
+      - name: Sanity check on ec3
+        run: curl blog.vizallati.guru
