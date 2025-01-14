@@ -3,10 +3,16 @@
 body {
     background: #ccc;
 }
-
+h1 {
+    font-family: "Press Start 2P", serif;
+    color: white;
+    padding: 45px;
+}
 h2 {
    font-family: "Source Code Pro", monospace;
 }
+
+
 .timeline {
     position: relative;
     max-width: 1200px;
@@ -66,7 +72,8 @@ h2 {
 
 .top {
 	position: relative;
-	height: 100px;
+	min-height: 250px;
+    align-items: start;
 	background: rgb(96,76,164);
 }
 
@@ -102,4 +109,10 @@ h2 {
 .filter-wrapper {
     display: inline;
     margin: 15px;
+}
+
+.subtitle {
+        font-family: "Source Code Pro", monospace;
+        color: white;
+        text-align: center;
 }

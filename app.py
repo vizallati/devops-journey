@@ -67,5 +67,17 @@ def dashboard():
 def projects():
     return render_template('projects.html')
 
+@app.route('/activity-feed')
+def activity_feed():
+    return render_template('activity-feed.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/other-interests')
+def other_interests():
+    return render_template('other-interests.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
