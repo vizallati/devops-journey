@@ -19,8 +19,9 @@ jobs:
           port: ${{ vars.EC2_SSH_PORT }}
           envs: GITHUB_HEAD_REF
           script: |
-            sudo rm -rf devops-journey
-            git clone https://github.com/vizallati/devops-journey.git
+            sudo rm -rf /mnt/data/devops-journey
+            cd /mnt/data
+            sudo git clone https://github.com/vizallati/devops-journey.git
             cd devops-journey
             sudo docker-compose down
             sudo docker system prune -af
