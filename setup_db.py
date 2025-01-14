@@ -36,6 +36,8 @@ def create_table(timeline):
             date_range VARCHAR(50),
             description TEXT,
             side ENUM('left', 'right'),
+            resource VARCHAR(255) NOT NULL,
+            link VARCHAR(255),
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)

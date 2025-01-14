@@ -42,11 +42,12 @@ def add_timeline_entry(entry, timeline):
     cursor = connection.cursor(dictionary=True)
     cursor.execute("USE devops_journey")
     timeline_entries = [
-        (entry[0], entry[1], entry[2], entry[3], entry[4])]
+        (entry[0], entry[1], entry[2], entry[3], entry[4], entry[6][0]['resource'], entry[6][0]['link'])]
+    logger.info(timeline_entries)
 
     cursor.executemany(f"""
-        INSERT INTO {timeline}_timeline (title, image_url, date_range, description, side)
-        VALUES (%s, %s, %s, %s, %s)
+        INSERT INTO {timeline}_timeline (title, image_url, date_range, description, side, resource, link)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
     """, timeline_entries)
     connection.commit()
     cursor.close()

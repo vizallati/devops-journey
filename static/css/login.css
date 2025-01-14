@@ -1,33 +1,35 @@
 body {
-    background-color: #1e1e1e;
+    background-color: #ccc;
     color: #00ff00;
-    font-family: 'Courier New', Courier, monospace;
-    display: flex;
+    font-family: "Source Code Pro", monospace;
     justify-content: center;
-    align-items: center;
     height: 100vh;
     margin: 0;
 }
-
+h1 {
+    font-family: "Press Start 2P", serif;
+    color: white;
+    padding: 45px;
+}
 .terminal {
     width: 400px;
-    background-color: #000;
+    background-color: rgb(96,76,164);
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    box-shadow: 0 0 10px rgb(96,76,164);
 }
 
 .terminal-header {
     display: flex;
     align-items: center;
     padding: 10px;
-    background-color: #333;
+    background-color: #ccc;
     border-radius: 5px 5px 0 0;
     border-bottom: 1px solid #00ff00;
 }
 
 .terminal-title {
     margin-left: 10px;
-    color: #00ff00;
+    color: white;
     font-weight: bold;
     flex-grow: 1;
     text-align: center;
@@ -64,11 +66,12 @@ form {
 
 label {
     margin-bottom: 5px;
+    color: white;
 }
 
 input {
-    background-color: #1e1e1e;
-    color: #00ff00;
+    background-color: white;
+    color: black;
     border: 1px solid #00ff00;
     border-radius: 3px;
     padding: 5px;
@@ -77,11 +80,11 @@ input {
 
 input:focus {
     outline: none;
-    border-color: #00ff00;
+    border-color: rgb(96,76,164);
 }
 
 button {
-    background-color: #00ff00;
+    background-color: white;
     color: #000;
     border: none;
     border-radius: 3px;
@@ -90,5 +93,19 @@ button {
 }
 
 button:hover {
-    background-color: #00ca4e;
+    background-color: #ccc;
+}
+
+.navigation-entry {
+    font-size: 15px;
+    font-family: "Source Code Pro", monospace;
+    color: #eee;
+    align-items: center;
+    padding: 0 20px;
+}
+.top {
+	position: relative;
+	min-height: 250px;
+    align-items: start;
+	background: rgb(96,76,164);
 }
