@@ -22,8 +22,27 @@
 
     </section>
     <h1>Projects I've worked on</h1>
+    </div>
+        {% for project in projects %}
+        <div class="project">
+            <div class="contents-block">
+                <div class="contents">
+                    <h2 class="h3">{{ project.title }}</h2>
+                    <div class="metadata">
+                    <div>{{ project.resource }}</div>
+                    <div>
+                        <a href="{{ project.link }}" target="_blank">Source</a>
+                    </div>
+                </div>
+                    <p>{{ project.description }}</p>
+                    </div>
+        </div>
+        <div class="image">
+            {% set file_name = project.image_location.split('/')[-1].split('\\')[-1] %}
+            <img src="{{ url_for('static', filename='images/' + file_name) }}" alt="y">
+        </div>
+    </div>
+    {% endfor %}
 
-
-</div>
 </body>
 </html>

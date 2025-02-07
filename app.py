@@ -1,16 +1,16 @@
 import hashlib
 import os
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from app_utils import check_user_auth
-from data import get_timeline_data, add_timeline_entry, get_recent_timeline_entries
+from data import get_timeline_data, add_timeline_entry, get_recent_timeline_entries, add_project_entry, get_projects
 from loguru import logger
-
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = os.urandom(24)
-
+UPLOAD_FOLDER = 'static/images'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route('/')
@@ -31,6 +31,19 @@ def add_entry():
         request_data.append(v)
     add_timeline_entry(request_data, timeline=entry_data['timeline'])
     return f"{entry_data['timeline']} timeline entry successfully added"
+
+
+@app.route('/add-project-entry', methods=['POST'])
+def add_project():
+    file = request.files['image']
+    if file:
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(file_path)
+    text_data = request.form
+    logger.info(text_data)
+    add_project_entry(file_path, text_data)
+    return jsonify({"message": "Image successfully uploaded and processed",
+                    "file_path": file_path})
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -65,7 +78,8 @@ def dashboard():
 
 @app.route('/projects')
 def projects():
-    return render_template('projects.html')
+    all_project_entries = get_projects()
+    return render_template('projects.html', projects=all_project_entries)
 
 @app.route('/activity-feed')
 def activity_feed():
