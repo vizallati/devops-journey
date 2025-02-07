@@ -20,6 +20,7 @@ jobs:
           envs: GITHUB_HEAD_REF
           script: |
             sudo rm -rf /mnt/data/devops-journey
+            sudo mkdir -p /mnt/data
             cd /mnt/data
             sudo git clone https://github.com/vizallati/devops-journey.git
             cd devops-journey
