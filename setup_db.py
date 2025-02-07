@@ -1,3 +1,4 @@
+import os
 import time
 import mysql.connector
 from loguru import logger
@@ -72,6 +73,7 @@ def create_project_table():
 if __name__=="__main__":
     logger.info("Waiting 15 seconds for Database to initialize...")
     time.sleep(15)
+    os.mkdir('static/images')
     create_database()
     create_table(timeline='devops')
     create_table(timeline='aqa')
