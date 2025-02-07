@@ -116,3 +116,30 @@ h2 {
         color: white;
         text-align: center;
 }
+
+.project {
+    background: white;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 4px;
+}
+
+.contents-block {
+    width: 70%;
+}
+
+.contents-block h2{
+    font-family: "Press Start 2P", serif;
+}
+.image img {
+    width: 400px;
+    height: auto;
+}
+
+.image {
+    padding: 20px;
+    width: 30%;
+}
