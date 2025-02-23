@@ -11,7 +11,9 @@ h1 {
 h2 {
    font-family: "Source Code Pro", monospace;
 }
-
+label{
+   font-family: "Source Code Pro", monospace;
+}
 
 .timeline {
     position: relative;
@@ -142,4 +144,12 @@ h2 {
 .image {
     padding: 20px;
     width: 30%;
+}
+
+.homehead {
+    display: flex;
+}
+
+.search-bar{
+    margin-left: auto;
 }

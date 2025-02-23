@@ -27,29 +27,63 @@
     </p>
 
 </div>
+
 <header>
-    <h2 class="filter-wrapper">Filter:</h2>
-    <div class="dropdown">
-        <span>Tech</span>
-        <div class="dropdown-content">
-            <p>Hello World!</p>
-        </div>
-    </div>
-    <div class="dropdown">
-        <span>Tech</span>
-        <div class="dropdown-content">
-            <p>Hello World!</p>
-        </div>
-    </div>
-    <div class="dropdown">
-        <span>Tech</span>
-        <div class="dropdown-content">
-            <p>Hello World!</p>
-        </div>
-    </div>
+    <div class="homehead">
+        <form method="get" class="filter" action="/categories">
+        <label for="category">Filter by category:</label>
+        <select name="category" id="category">
+            <option value="activity-feed">Activity Feed</option>
+            <option value="aqa">Test Automation Journey</option>
+            <option value="devops">Devops Journey</option>
+            <option value="projects">Projects</option>
+        </select>
+        <button type="submit">Filter</button>
+        </form>
 
-
+        <form class="search-bar" method="get" action="/search">
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit">Search<i class="fa fa-search"></i></button>
+        </form>
+    </div>
 
 </header>
+<div class="timeline">
+    {% if timeline_data %}
+        {% for entry in timeline_data %}
+        <div class="container {{ entry.side }}-container">
+            <img src="{{ entry.image_url }}" alt="{{ entry.title }}">
+            <div class="timeline-content">
+                <h2>{{ entry.title }}</h2>
+                <small>{{ entry.date_range }}</small>
+                <p>{{ entry.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% if projects %}
+    {% for project in projects %}
+    <div class="project">
+        <div class="contents-block">
+            <div class="contents">
+                <h2 class="h3">{{ project.title }}</h2>
+                <div class="metadata">
+                <div>{{ project.resource }}</div>
+                <div>
+                    <a href="{{ project.link }}" target="_blank">Source</a>
+                </div>
+            </div>
+                <p>{{ project.description }}</p>
+                </div>
+    </div>
+    <div class="image">
+        {% set file_name = project.image_location.split('/')[-1].split('\\')[-1] %}
+        <img src="{{ url_for('static', filename='images/' + file_name) }}" alt="y">
+    </div>
+</div>
+    {% endfor %}
+{% endif %}
+
 </body>
 </html>
