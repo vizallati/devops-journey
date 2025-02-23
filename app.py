@@ -93,5 +93,18 @@ def about():
 def other_interests():
     return render_template('other-interests.html')
 
+@app.route('/categories')
+def get_categories():
+    category = request.args.get('category')
+    match category:
+        case 'aqa' | 'devops':
+            timeline_data = get_timeline_data(timeline=category)
+            return render_template('index.html', timeline_data=timeline_data)
+        case 'projects':
+            all_project_entries = get_projects()
+            return render_template('index.html', projects=all_project_entries)
+        case _:
+            return render_template('index.html')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
