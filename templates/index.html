@@ -42,7 +42,7 @@
         </form>
 
         <form class="search-bar" method="get" action="/search">
-        <input type="text" placeholder="Search.." name="search">
+        <input type="text" placeholder="Search.." id="tags" name="search">
         <button type="submit">Search<i class="fa fa-search"></i></button>
         </form>
     </div>
@@ -84,6 +84,20 @@
 </div>
     {% endfor %}
 {% endif %}
+<div class="search_results">
+    {% if search_results %}
+        {% for entry in search_results %}
+            <div class="result-items">
+                <h2>{{ entry.title }}</h2>
+                <small>{{ entry.date_range }}</small>
+                <p>{{ entry.description }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if no_search_results %}
+        <p>No search results found.</p>
+    {% endif %}
+</div>
 
 </body>
 </html>
