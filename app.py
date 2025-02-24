@@ -2,7 +2,8 @@ import hashlib
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from app_utils import check_user_auth
-from data import get_timeline_data, add_timeline_entry, get_recent_timeline_entries, add_project_entry, get_projects
+from data import get_timeline_data, add_timeline_entry, get_recent_timeline_entries, add_project_entry, get_projects, \
+    get_search_query
 from loguru import logger
 
 app = Flask(__name__)
@@ -109,7 +110,12 @@ def get_categories():
 
 @app.route('/search')
 def search():
-    return render_template('search.html')
+    query = request.args.get('search')
+    results = get_search_query(query)
+    if results:
+        return render_template('index.html', search_results=results)
+    else:
+        return render_template('index.html', no_search_results=True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

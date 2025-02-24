@@ -87,3 +87,25 @@ def get_projects():
         return rows
     except Exception as err:
         logger.info(f"Error: {err}")
+
+def get_search_query(search_query):
+    try:
+        connection = establish_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("USE devops_journey")
+        results = []
+        tables = ['aqa_timeline', 'devops_timeline', 'projects']
+        column_name = 'description'
+        logger.info(f"Getting search query {search_query} from database")
+        for table in tables:
+            query = f"""
+                SELECT * FROM `{table}`
+                WHERE `{column_name}` LIKE %s
+            """
+            cursor.execute(query, (f'%{search_query}%',))
+            results.extend(cursor.fetchall())
+        cursor.close()
+        connection.close()
+        return results
+    except Exception as err:
+        logger.info(f"Error: {err}")

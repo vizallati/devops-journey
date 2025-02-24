@@ -153,3 +153,16 @@ label{
 .search-bar{
     margin-left: auto;
 }
+
+.search_results {
+    float: right;
+}
+.result-items {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 6px;
+    margin: 5px;
+    width: 400px;
+    font-size: 15px;
+    font-family: "Source Code Pro", monospace;
+}
