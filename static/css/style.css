@@ -166,3 +166,27 @@ label{
     font-size: 15px;
     font-family: "Source Code Pro", monospace;
 }
+
+
+
+@media only screen and (max-width: 950px) {
+  .homehead {
+    display: flex;
+  }
+
+  .search-bar {
+    display: flex;
+  }
+  .search-bar button{
+   width: 38%;
+   height: 20px;
+   margin-top: 18px;
+  }
+  .search-bar input{
+    margin: 3px;
+    width: 64%;
+    height: 15px;
+    margin-top: 18px;
+
+  }
+}

@@ -68,20 +68,20 @@
         <div class="contents-block">
             <div class="contents">
                 <h2 class="h3">{{ project.title }}</h2>
-                <div class="metadata">
+                <div class="metadata"> </div>
                 <div>{{ project.resource }}</div>
                 <div>
                     <a href="{{ project.link }}" target="_blank">Source</a>
                 </div>
             </div>
                 <p>{{ project.description }}</p>
-                </div>
+            </div>
     </div>
     <div class="image">
         {% set file_name = project.image_location.split('/')[-1].split('\\')[-1] %}
         <img src="{{ url_for('static', filename='images/' + file_name) }}" alt="y">
     </div>
-</div>
+
     {% endfor %}
 {% endif %}
 <div class="search_results">
@@ -98,6 +98,5 @@
         <p>No search results found.</p>
     {% endif %}
 </div>
-
 </body>
 </html>
