@@ -21,6 +21,8 @@ services:
     depends_on:
       - db
     restart: always
+    volumes:
+      - ../images:/app/static/images
 #  nginx:
 #    image: nginx
 #    container_name: nginx_reverse_proxy
