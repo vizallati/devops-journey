@@ -22,8 +22,26 @@
 
     </section>
     <h1>My activity feed</h1>
-
-
+</div>
+<div class="activities">
+    <div class="activity">
+        {% for activity in activities %}
+        <div class="description">{{ activity.description }}:</div>
+        {% if activity.image_location %}
+            {% set file_name = activity.image_location.split('/')[-1].split('\\')[-1] %}
+            <img src="{{ url_for('static', filename='images/' + file_name) }}" alt={{ activity.description }}>
+        {% endif %}
+        <p>2025-02-27</p>
+        <div class="actions">
+            <button class="like">Like</button>
+            <button class="comment-toggle">Comment</button>
+        </div>
+        <div class="comments">
+            <textarea placeholder="Write a comment..."></textarea>
+            <button class="submit-comment">Post</button>
+        </div>
+    </div>
+        {% endfor %}
 </div>
 </body>
 </html>
