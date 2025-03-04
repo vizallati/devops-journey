@@ -109,3 +109,40 @@ def get_search_query(search_query):
         return results
     except Exception as err:
         logger.info(f"Error: {err}")
+
+
+def add_activity_entry(description, image_location, activity_date):
+    connection = establish_connection()
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute("USE devops_journey")
+    table_name = 'activities'
+    logger.info(f'Activity data: description: {description}, image location: {image_location}, activity date: {activity_date}')
+    cursor.execute(f"""
+                INSERT INTO {table_name} (description, image_location, activity_date)
+                VALUES (%s, %s, %s)
+            """, (description, image_location, activity_date))
+    connection.commit()
+    activity_id = cursor.lastrowid
+    cursor.close()
+    connection.close()
+    return activity_id
+
+def get_activity_entries():
+    try:
+        connection = establish_connection()
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("USE devops_journey")
+        results = []
+        table = 'activities'
+        logger.info(f"Getting activity entries from database")
+        query = f"""
+                SELECT * FROM `{table}`
+            """
+        cursor.execute(query)
+        results.extend(cursor.fetchall())
+        cursor.close()
+        connection.close()
+        logger.info(f'List of activities: {results}')
+        return results
+    except Exception as err:
+        logger.info(f"Error: {err}")

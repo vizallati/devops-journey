@@ -1,16 +1,18 @@
 import hashlib
 import os
+from datetime import datetime
+
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from app_utils import check_user_auth
 from data import get_timeline_data, add_timeline_entry, get_recent_timeline_entries, add_project_entry, get_projects, \
-    get_search_query
+    get_search_query, add_activity_entry, get_activity_entries
 from loguru import logger
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = os.urandom(24)
-UPLOAD_FOLDER = '/app/static/images'
+UPLOAD_FOLDER = './static/images'     #why do i need to change this during debuging
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -84,7 +86,8 @@ def projects():
 
 @app.route('/activity-feed')
 def activity_feed():
-    return render_template('activity-feed.html')
+    activities = get_activity_entries()
+    return render_template('activity-feed.html', activities=activities)
 
 @app.route('/about')
 def about():
@@ -116,6 +119,23 @@ def search():
         return render_template('index.html', search_results=results)
     else:
         return render_template('index.html', no_search_results=True)
+
+
+@app.route('/api/v1/activity', methods=['POST'])
+def add_activity():
+    photo = request.files['image']
+    file_path = None
+    if photo:
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], photo.filename)
+        photo.save(file_path)
+    activity_data = request.form
+    logger.info(activity_data)
+    description = activity_data.get('description')
+    activity_date =  datetime.utcnow().date()
+    activity_id = add_activity_entry(description, file_path, activity_date)
+    return jsonify({'message': 'Activity added successfully!', 'activity_id': activity_id}), 201
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
