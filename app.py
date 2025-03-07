@@ -25,44 +25,6 @@ def devops_timeline():
     timeline_data = get_timeline_data(timeline='devops')
     return render_template('devops-timeline.html', timeline_data=timeline_data)
 
-@app.route('/add-timeline-entry', methods=['POST'])
-def add_entry():
-    entry_data = request.json
-    logger.info(entry_data)
-    request_data = []
-    for k,v in entry_data.items():
-        request_data.append(v)
-    add_timeline_entry(request_data, timeline=entry_data['timeline'])
-    return f"{entry_data['timeline']} timeline entry successfully added"
-
-
-@app.route('/add-project-entry', methods=['POST'])
-def add_project():
-    file = request.files['image']
-    if file:
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-        file.save(file_path)
-    text_data = request.form
-    logger.info(text_data)
-    add_project_entry(file_path, text_data)
-    return jsonify({"message": "Image successfully uploaded and processed",
-                    "file_path": file_path})
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    session['loggedin'] = False
-    if request.method == 'GET':
-        return render_template('login.html', msg='')
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = request.form['username']
-        password = request.form['password']
-        if username and password == "allati":
-            session['loggedin'] = True
-            session['username'] = username
-            return redirect(url_for('dashboard'))
-        else:
-            return "Wrong username or password"
-
 @app.route('/test-automation-journey')
 def aqa_timeline():
     timeline_data = get_timeline_data(timeline='aqa')
@@ -111,7 +73,12 @@ def get_categories():
             return render_template('index.html')
 
 
-@app.route('/search')
+
+
+
+###################### API ENDPOINTS ###########################################################
+
+@app.route('/api/v1/search')
 def search():
     query = request.args.get('search')
     results = get_search_query(query)
@@ -120,6 +87,43 @@ def search():
     else:
         return render_template('index.html', no_search_results=True)
 
+@app.route('/api/v1/timeline', methods=['POST'])
+def add_entry():
+    entry_data = request.json
+    logger.info(entry_data)
+    request_data = []
+    for k,v in entry_data.items():
+        request_data.append(v)
+    add_timeline_entry(request_data, timeline=entry_data['timeline'])
+    return jsonify({"message": "Timeline entry successfully added","entry": entry_data['timeline']}), 201
+
+
+@app.route('/api/v1/project', methods=['POST'])
+def add_project():
+    file = request.files['image']
+    file_path = None
+    if file:
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(file_path)
+    text_data = request.form
+    logger.info(text_data)
+    add_project_entry(file_path, text_data)
+    return jsonify({"message": "Project entry successfully added"}), 201
+
+@app.route('/api/v1/login', methods=['GET', 'POST'])
+def login():
+    session['loggedin'] = False
+    if request.method == 'GET':
+        return render_template('login.html', msg='')
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        username = request.form['username']
+        password = request.form['password']
+        if username and password == "allati":
+            session['loggedin'] = True
+            session['username'] = username
+            return redirect(url_for('dashboard'))
+        else:
+            return "Wrong username or password"
 
 @app.route('/api/v1/activity', methods=['POST'])
 def add_activity():
@@ -134,8 +138,6 @@ def add_activity():
     activity_date =  datetime.utcnow().date()
     activity_id = add_activity_entry(description, file_path, activity_date)
     return jsonify({'message': 'Activity added successfully!', 'activity_id': activity_id}), 201
-
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

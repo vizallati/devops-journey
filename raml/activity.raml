@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: Activity API
+version: v1
+baseUri: http://localhost:5000/api/v1
+mediaType: application/json
+
+/activity:
+  post:
+    description: Submit activity details.
+    body:
+      application/json:
+        type: object
+        properties:
+          description:
+            type: string
+            description: Detailed activity description.
+            example: "Just started reading this book and it is pretty amazing"
+            required: true
+          image_location:
+            type: string
+            description: URL or path for the image related to the activity.
+            example: ""
+            required: false
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Activity created successfully."
+              }

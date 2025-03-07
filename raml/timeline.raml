@@ -1,0 +1,51 @@
+#%RAML 1.0
+title: Timeline API
+version: v1
+baseUri: http://localhost:5000/api/v1
+mediaType: application/json
+
+/timeline:
+  post:
+    description: Create a new timeline entry.
+    body:
+      application/json:
+        example: |
+          {
+            "title": "Typescript",
+            "image_url": "https://img.icons8.com/?size=100&id=13441&format=png&color=000000",
+            "date_range": "2018 - 2019",
+            "description": "jest, nodejs",
+            "side": "right",
+            "timeline": "aqa",
+            "resources": [
+              {
+                "resource": "tutorials on acloudguru",
+                "link": "https://www.pluralsight.com/cloud-guru"
+              }
+            ]
+          }
+        type: object
+        properties:
+          title: string
+          florida: string
+          image_url: string
+          date_range: string
+          description: string
+          side: string
+          timeline: string
+          resources:
+            type: array
+            items:
+              type: object
+              properties:
+                resource: string
+                link: string
+        required: true
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Timeline entry created successfully."
+              }
