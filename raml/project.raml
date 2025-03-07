@@ -1,0 +1,44 @@
+#%RAML 1.0
+title: Project API
+version: v1
+baseUri: http://localhost:5000/api/v1
+mediaType: multipart/form-data
+
+/project:
+  post:
+    description: Create a new project entry with images and additional details.
+    body:
+      multipart/form-data:
+        properties:
+          image:
+            type: file
+            description: Uploaded project images.
+            required: true
+          title:
+            type: string
+            description: Title of the project.
+            example: "Webapp"
+            required: true
+          description:
+            type: string
+            description: Detailed description of the project.
+            example: "Webapp project is designed to provide a seamless and efficient blogging experience, leveraging built using Python and JavaScript a range of modern technologies."
+            required: true
+          resource:
+            type: string
+            description: Tools and technologies used in the project.
+            example: "Python, CSS, HTML, AWS, NGINX"
+            required: true
+          link:
+            type: string
+            description: URL link to the project repository or resources.
+            example: "https://github.com/vizallati/devops-journey"
+            required: true
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Project entry created successfully."
+              }
