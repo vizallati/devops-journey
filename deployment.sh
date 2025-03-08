@@ -3,6 +3,7 @@
 
 echo "Starting backup server..."
 sudo docker-compose up -d --build web_app_backup
+sleep 10
 # todo: add checks for status of container
 echo "Switching to backup server"
 sudo sed -i s/5000/5001/g /etc/nginx/sites-available/default
