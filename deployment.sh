@@ -9,7 +9,7 @@ sudo sed -i s/5000/5001/g /etc/nginx/sites-available/default
 sudo nginx -s reload
 
 echo "Rebuilding main server"
-sudo docker-compose up -d --build --force-recreate web_app
+sudo docker-compose up -d --build --force-recreate --no-deps web_app
 sleep 10
 
 echo "Switching to main server"
