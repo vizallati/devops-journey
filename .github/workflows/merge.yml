@@ -23,6 +23,6 @@ jobs:
             cd devops-journey
             sudo git pull
             sudo chmod u+x ./deployment.sh
-            ./deployment.sh
+            sudo ./deployment.sh
       - name: Sanity check on ec3
         run: curl -s -o /dev/null -w "%{http_code}" https://blog.vizallati.guru | grep -q "^200$" || exit 1
