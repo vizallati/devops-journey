@@ -19,6 +19,6 @@ sudo nginx -s reload
 
 echo "Stopping backup server"
 sudo docker-compose stop web_app_backup
-sudo docker-compose rm web_app_backup -y
+sudo docker-compose rm -f web_app_backup
 
 
