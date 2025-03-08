@@ -115,8 +115,7 @@ def create_comment_table():
 
 
 if __name__=="__main__":
-    logger.info("Waiting 15 seconds for Database to initialize...")
-    time.sleep(15)
+    logger.info("Setting up database...")
     create_database()
     create_table(timeline='devops')
     create_table(timeline='aqa')
