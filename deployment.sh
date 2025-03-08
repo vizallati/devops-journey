@@ -6,6 +6,7 @@ sudo docker-compose up -d --build web_app_backup
 # todo: add checks for status of container
 
 echo "Switching to backup server"
+sleep 10
 sudo sed -i s/5000/5001/g /etc/nginx/sites-available/default
 sudo nginx -s reload
 
@@ -21,7 +22,9 @@ sudo docker rmi -f "$container_name"
 echo "Rebuilding main server"
 sudo docker-compose up -d --no-deps --build web_app
 
+
 echo "Switching to main server"
+sleep 10
 sudo sed -i s/5001/5000/g /etc/nginx/sites-available/default
 sudo nginx -s reload
 
