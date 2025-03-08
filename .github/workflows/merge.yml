@@ -21,6 +21,7 @@ jobs:
           script: |
             cd /mnt/data
             cd devops-journey
+            sudo git restore .
             sudo git pull
             sudo chmod u+x ./deployment.sh
             sudo ./deployment.sh
