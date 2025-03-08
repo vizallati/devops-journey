@@ -16,7 +16,6 @@ services:
       - le_pond
 
   web_app:
-    image: web_app:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -32,7 +31,6 @@ services:
       - le_pond
 
   web_app_backup:
-    image: web_app_backup:latest
     build:
       context: .
       dockerfile: Dockerfile
