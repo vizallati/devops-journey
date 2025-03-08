@@ -12,12 +12,11 @@ stop_server() {
   sudo docker-compose rm -f "$server"
   container_name=$(sudo docker images | grep "$server" | cut -d ' ' -f 1)
   sudo docker rmi -f "$container_name"
-#  sudo docker builder prune -f
 }
 
 start_server() {
   echo "Starting server: $1 ..."
-  sudo docker-compose up -d --no-deps --build "$1"
+  sudo docker-compose up -d --no-deps --build --force-recreate "$1"
   sleep 10
 }
 
