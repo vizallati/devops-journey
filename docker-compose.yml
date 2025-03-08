@@ -37,8 +37,6 @@ services:
     container_name: web_app_backup
     ports:
       - "5001:5000"
-    depends_on:
-      - db
     restart: always
     volumes:
       - ../images_backup:/app/static/images
