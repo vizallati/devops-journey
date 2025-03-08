@@ -22,7 +22,7 @@ start_server() {
 
 switch_upstream_server() {
   echo "Switching from upstream server running on port: $1 to server running on port: $2"
-  sudo sed -i "s/$1/$2/g /etc/nginx/sites-available/default"
+  sudo sed -i s/"$1"/"$2"/g /etc/nginx/sites-available/default
   sudo nginx -s reload
 }
 
