@@ -37,4 +37,4 @@ services:
       - db
     restart: always
     volumes:
-      - ../images:/app/static/images
+      - ../images_backup:/app/static/images
