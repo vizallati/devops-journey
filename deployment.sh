@@ -8,8 +8,12 @@ echo "Switching to backup server"
 sudo sed -i s/5000/5001/g /etc/nginx/sites-available/default
 sudo nginx -s reload
 
+echo "Stopping main server"
+sudo docker-compose stop web_app
+sudo docker-compose rm -f web_app
+
 echo "Rebuilding main server"
-sudo docker-compose up -d --build --force-recreate --no-deps web_app
+sudo docker-compose up -d --no-deps --build web_app
 sleep 10
 
 echo "Switching to main server"
