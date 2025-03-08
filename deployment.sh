@@ -12,7 +12,7 @@ stop_server() {
   sudo docker-compose rm -f "$server"
   container_name=$(sudo docker images | grep "$server" | cut -d ' ' -f 1)
   sudo docker rmi -f "$container_name"
-  sudo docker builder prune -f
+#  sudo docker builder prune -f
 }
 
 start_server() {
