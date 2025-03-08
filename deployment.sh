@@ -1,38 +1,43 @@
 #!/usr/bin/bash
 
+MAIN_SERVICE_PORT=5000
+BACKUP_SERVICE_PORT=5001
+MAIN_SERVICE_NAME=web_app
+BACKUP_SERVICE_NAME=web_app_backup
 
-echo "Starting backup server..."
-sudo docker-compose up -d --build web_app_backup
-# todo: add checks for status of container
+stop_server() {
+  server="$1"
+  echo "Stopping server: $server"
+  sudo docker-compose stop "$server"
+  sudo docker-compose rm -f "$server"
+  container_name=$(sudo docker images | grep "$server" | cut -d ' ' -f 1)
+  sudo docker rmi -f "$container_name"
+  sudo docker builder prune -f
+}
 
-echo "Switching to backup server"
-sleep 10
-sudo sed -i s/5000/5001/g /etc/nginx/sites-available/default
-sudo nginx -s reload
+start_server() {
+  echo "Starting server: $1 ..."
+  sudo docker-compose up -d --no-deps --build "$1"
+  sleep 10
+}
+
+switch_upstream_server() {
+  echo "Switching from upstream server running on port: $1 to server running on port: $2"
+  sudo sed -i "s/$1/$2/g /etc/nginx/sites-available/default"
+  sudo nginx -s reload
+}
+
+
+start_server $BACKUP_SERVICE_NAME
+switch_upstream_server $MAIN_SERVICE_PORT $BACKUP_SERVICE_PORT
 
 echo "Getting statuses of running containers"
 sudo docker ps
 
-echo "Stopping main server"
-sudo docker-compose stop web_app
-sudo docker-compose rm -f web_app
-container_name=$(sudo docker images | grep web_app | cut -d ' ' -f 1)
-sudo docker rmi -f "$container_name"
+stop_server $MAIN_SERVICE_NAME
+start_server $MAIN_SERVICE_NAME
+switch_upstream_server $BACKUP_SERVICE_PORT $MAIN_SERVICE_PORT
 
-echo "Rebuilding main server"
-sudo docker-compose up -d --no-deps --build web_app
-
-
-echo "Switching to main server"
-sleep 10
-sudo sed -i s/5001/5000/g /etc/nginx/sites-available/default
-sudo nginx -s reload
-
-
-echo "Stopping backup server"
-sudo docker-compose stop web_app_backup
-sudo docker-compose rm -f web_app_backup
-container_name=$(sudo docker images | grep web_app_backup | cut -d ' ' -f 1)
-sudo docker rmi -f "$container_name"
+stop_server $BACKUP_SERVICE_NAME
 
 
