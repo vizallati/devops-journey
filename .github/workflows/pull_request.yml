@@ -11,6 +11,8 @@ jobs:
         run: sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       - name: Install dependencies
         run: sudo chmod +x /usr/local/bin/docker-compose
+      - name: Create docker network
+        run: sudo docker network create le_pond
       - name: Deploy webapp on runner node
         run: docker-compose up -d
       - name: Expose port used by web app
