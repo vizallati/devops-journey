@@ -33,6 +33,8 @@
             <h2>{{ entry.title }}</h2>
             <small>{{ entry.date_range }}</small>
             <p>{{ entry.description }}</p>
+            <p> Resources: <a href="{{ entry.link }}" target="_blank">{{ entry.resource }}</a></p>
+            <small>tags: {{ entry.tags }}</small>
         </div>
     </div>
     {% endfor %}
