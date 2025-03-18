@@ -18,8 +18,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class='top'>
-    <section class="nav-bar">
+<header>
+    <div class='top'>
+    <nav class="nav-bar">
         <a class="navigation-entry" href="/">Home</a>
         <a class="navigation-entry" href="/activity-feed">Activity feed</a>
         <a class="navigation-entry" href="/projects">Projects</a>
@@ -27,11 +28,30 @@
         <a class="navigation-entry" href="/devops-journey">Devops Journey</a>
         <a class="navigation-entry" href="/about">About</a>
         <a class="navigation-entry" href="/other-interests">Other Interests</a>
+    </nav>
+        <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="mobile-menu">
+                <a class="navigation-entry" href="/">Home</a>
+                <a class="navigation-entry" href="/activity-feed">Activity feed</a>
+                <a class="navigation-entry" href="/projects">Projects</a>
+                <a class="navigation-entry" href="/test-automation-journey">Test Automation Journey</a>
+                <a class="navigation-entry" href="/devops-journey">Devops Journey</a>
+                <a class="navigation-entry" href="/about">About</a>
+                <a class="navigation-entry" href="/other-interests">Other Interests</a>
+            </div>
 
-    </section>
+        </div>
     <h1>About Me [Coming Soon...]</h1>
-
-
 </div>
+
+</header>
+<script>
+    function toggleMobileMenu(menu) {
+      menu.classList.toggle('open');
+    }
+</script>
 </body>
 </html>

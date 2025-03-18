@@ -18,8 +18,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class='top'>
-    <section class="nav-bar">
+
+<header>
+    <div class='top'>
+    <nav class="nav-bar">
         <a class="navigation-entry" href="/">Home</a>
         <a class="navigation-entry" href="/activity-feed">Activity feed</a>
         <a class="navigation-entry" href="/projects">Projects</a>
@@ -27,16 +29,28 @@
         <a class="navigation-entry" href="/devops-journey">Devops Journey</a>
         <a class="navigation-entry" href="/about">About</a>
         <a class="navigation-entry" href="/other-interests">Other Interests</a>
-    </section>
+    </nav>
+        <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="mobile-menu">
+                <a class="navigation-entry" href="/">Home</a>
+                <a class="navigation-entry" href="/activity-feed">Activity feed</a>
+                <a class="navigation-entry" href="/projects">Projects</a>
+                <a class="navigation-entry" href="/test-automation-journey">Test Automation Journey</a>
+                <a class="navigation-entry" href="/devops-journey">Devops Journey</a>
+                <a class="navigation-entry" href="/about">About</a>
+                <a class="navigation-entry" href="/other-interests">Other Interests</a>
+            </div>
+
+        </div>
     <h1>Welcome to My Galactic Hub!</h1>
     <p class="subtitle">
         Greetings, fellow traveler of the cosmos! Whether you're a tech Jedi,
         a curious Padawan, or just a passerby, may the Force be with you as you explore my digital galaxy.
     </p>
-
 </div>
-
-<header>
     <div class="homehead">
         <form method="get" class="filter" action="/categories">
         <label for="category">Filter by category:</label>
@@ -56,6 +70,11 @@
     </div>
 
 </header>
+<script>
+    function toggleMobileMenu(menu) {
+      menu.classList.toggle('open');
+    }
+</script>
 <div class="timeline">
     {% if timeline_data %}
         {% for entry in timeline_data %}

@@ -18,23 +18,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
+<header>
     <div class='top'>
-        <section class="nav-bar">
-            <a class="navigation-entry" href="/">Home</a>
-            <a class="navigation-entry" href="/activity-feed">Activity feed</a>
-            <a class="navigation-entry" href="/projects">Projects</a>
-            <a class="navigation-entry" href="/test-automation-journey">Test Automation Journey</a>
-            <a class="navigation-entry" href="/devops-journey">Devops Journey</a>
-            <a class="navigation-entry" href="/about">About</a>
-            <a class="navigation-entry" href="/other-interests">Other Interests</a>
-        </section>
-        <h1>Timeline for my Devops journey</h1>
-        <p class="subtitle">
-        loren ipsum
-        </p>
+    <nav class="nav-bar">
+        <a class="navigation-entry" href="/">Home</a>
+        <a class="navigation-entry" href="/activity-feed">Activity feed</a>
+        <a class="navigation-entry" href="/projects">Projects</a>
+        <a class="navigation-entry" href="/test-automation-journey">Test Automation Journey</a>
+        <a class="navigation-entry" href="/devops-journey">Devops Journey</a>
+        <a class="navigation-entry" href="/about">About</a>
+        <a class="navigation-entry" href="/other-interests">Other Interests</a>
+    </nav>
+        <div id="hamburger-icon" onclick="toggleMobileMenu(this)">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="mobile-menu">
+                <a class="navigation-entry" href="/">Home</a>
+                <a class="navigation-entry" href="/activity-feed">Activity feed</a>
+                <a class="navigation-entry" href="/projects">Projects</a>
+                <a class="navigation-entry" href="/test-automation-journey">Test Automation Journey</a>
+                <a class="navigation-entry" href="/devops-journey">Devops Journey</a>
+                <a class="navigation-entry" href="/about">About</a>
+                <a class="navigation-entry" href="/other-interests">Other Interests</a>
+            </div>
 
+        </div>
+    <h1>Timeline for my Devops journey</h1>
+</div>
 
-    </div>
+</header>
+<script>
+    function toggleMobileMenu(menu) {
+      menu.classList.toggle('open');
+    }
+</script>
 
 <div class="timeline">
     {% for entry in timeline_data %}
