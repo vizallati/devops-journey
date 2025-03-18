@@ -177,8 +177,57 @@ label {
 	font-family: "Source Code Pro", monospace;
 }
 
+#hamburger-icon {
+    margin: auto 0;
+    float: right;
+    margin-right: 3px;
+    display: none;
+    cursor: pointer;
+}
+
+#hamburger-icon .bar {
+    width: 35px;
+    height: 3px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+    border-radius: 50px;
+}
+.mobile-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: auto;
+    right: 0;
+    height: calc(100vh - 50px);
+
+}
+.open .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+
+}
 
 @media only screen and (max-width: 950px) {
+    .navigation-entry {
+        color: white;
+        text-decoration: none;
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 10px 15px;
+}
+
+
+    header nav {
+        display: none;
+    }
+    #hamburger-icon {
+        display: block
+    }
 	.homehead {
 		display: flex;
 	}
