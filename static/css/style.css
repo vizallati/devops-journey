@@ -224,7 +224,7 @@ label {
 
 	.container {
 		position: relative;
-		width: 50%;
+		width: 100%;
 		padding: 10px 50px;
 		box-sizing: border-box;
 	}
@@ -244,29 +244,31 @@ label {
 	}
 
 	.left-container .timeline-content {
-		margin-left: -40px;
+		margin-left: -30px;
 	}
 
 	.right-container .timeline-content {
-		margin-left: -20px;
+		margin-left: -30px;
 	}
 
 	.right-container {
-		left: 50%;
+		left: 0;
 	}
 
 	.container img {
 		position: absolute;
 		width: 40px;
 		border-radius: 50%;
-		top: 32px;
+		top: 0;
+		left: 45%;
+		right: 5;
 		z-index: 10;
 		background: #fff;
 
 	}
 
 	.right-container img {
-		left: -20px;
+
 	}
 
 	.left-container img {
