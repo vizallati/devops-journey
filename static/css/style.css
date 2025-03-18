@@ -83,6 +83,12 @@ label {
 	align-items: start;
 	background: rgb(96, 76, 164);
 }
+.close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
 
 .navigation-entry {
 	font-size: 15px;
@@ -195,11 +201,16 @@ label {
 }
 .mobile-menu {
     display: none;
-    position: absolute;
-    top: 50px;
-    left: auto;
-    right: 0;
-    height: calc(100vh - 50px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #ccc;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 1000;
 
 }
 .open .mobile-menu {
