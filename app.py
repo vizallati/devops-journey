@@ -14,11 +14,12 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = os.urandom(24)
 UPLOAD_FOLDER = '/app/static/images'     #Need to change this when debugging locally
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+DEFAULT_FILTER = 'aqa'
 
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return redirect(url_for('get_categories', category=DEFAULT_FILTER))
 
 @app.route('/devops-journey')
 def devops_timeline():

@@ -15,7 +15,15 @@ h2 {
 label {
 	font-family: "Source Code Pro", monospace;
 }
-
+button {
+  color: grey;
+  text-align: center;
+  text-decoration: none;
+}
+.filter {
+    margin-top: 10px;
+    margin-left: 5px;
+}
 .timeline {
 	position: relative;
 	max-width: 1200px;
@@ -163,10 +171,14 @@ label {
 
 .homehead {
 	display: flex;
+	background: white;
+	min-height: 35px;
 }
 
 .search-bar {
 	margin-left: auto;
+	margin-right: 18px;
+	margin-top: 10px;
 }
 
 .search_results {
@@ -192,12 +204,13 @@ label {
 }
 
 #hamburger-icon .bar {
-    width: 35px;
+    width: 30px;
     height: 3px;
     background-color: white;
     margin: 6px 0;
     transition: 0.4s;
     border-radius: 50px;
+    margin-right: 10px;
 }
 .mobile-menu {
     display: none;
@@ -230,21 +243,27 @@ label {
         white-space: nowrap;
         text-overflow: ellipsis;
         padding: 10px 15px;
-}
-
-
+    }
     header nav {
         display: none;
     }
     #hamburger-icon {
         display: block
     }
+    .subtitle {
+        min-height: 110px;
+        text-align: left;
+        margin-left: 45px;
+        margin-bottom: 1px;
+    }
 	.homehead {
 		display: flex;
+		margin-top: 1px;
 	}
 
 	.search-bar {
 		display: flex;
+		margin-right: 3px;
 	}
 
 	.search-bar button {
@@ -279,6 +298,7 @@ label {
 		max-width: 1200px;
 		margin: 100px auto;
 		background #2e364a;
+		margin-top: 25px;
 
 	}
 
