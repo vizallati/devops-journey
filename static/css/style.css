@@ -294,6 +294,11 @@ button {
 	.image img {
 		width: 130px;
 		height: 100px;
+		margin-left: -70px;
+		float: right;
+	}
+	.contents p {
+	    width: 220px;
 	}
 
 	.timeline {
