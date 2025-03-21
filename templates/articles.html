@@ -57,18 +57,16 @@
     }
 </script>
         {% for feed_item in feed_items %}
-        <div class="project">
-            <div class="contents-block">
-                <div class="contents">
+        <div class="articles">
+            <div class="article">
+                <div class="article-content">
                     <h2 class="h3">{{ feed_item.title }}</h2>
                     <div class="metadata">
                     <div>{{ feed_item.resource }}</div>
-                    <div>
-                        <a href="{{ feed_item.link }}" target="_blank">Read More</a>
-                    </div>
                 </div>
                     {{ feed_item.description }}
-                    </div>
+            </div>
+                <div><a href="{{ feed_item.link }}" target="_blank">Read on medium</a></div>
         </div>
     </div>
     {% endfor %}
