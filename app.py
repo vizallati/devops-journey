@@ -5,7 +5,7 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from markupsafe import Markup
 
-from app_utils import check_user_auth, convert_rrs_to_json
+from app_utils import check_user_auth, convert_rrs_to_json, summarize_article
 from data import get_timeline_data, add_timeline_entry, get_recent_timeline_entries, add_project_entry, get_projects, \
     get_search_query, add_activity_entry, get_activity_entries
 from loguru import logger
@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = os.urandom(24)
-UPLOAD_FOLDER = '/app/static/images'     #Need to change this when debugging locally
+UPLOAD_FOLDER = './static/images'     #Need to change this when debugging locally
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 DEFAULT_FILTER = 'aqa'
 
@@ -79,8 +79,9 @@ def get_categories():
 def articles():
     json_data = convert_rrs_to_json()
     logger.info(f"Medium feed data {json_data}")
-    json_data[0]["description"] = json_data[0]["description"].strip()
-    json_data[0]["description"] = Markup(json_data[0]["description"])
+    json_data[0]["description"] = summarize_article(json_data[0]["description"])
+    json_data[0]["description"] = Markup(json_data[0]["description"].strip())
+    logger.info(f'Article summary is: {json_data[0]["description"]}')
     return render_template('articles.html', feed_items=json_data)
 
 
