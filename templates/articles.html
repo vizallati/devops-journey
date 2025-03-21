@@ -11,7 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>devops-journey</title>
+    <title>About Me</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
             </div>
 
         </div>
-    <h1>Timeline for my Devops journey</h1>
+    <h1>Articles on medium</h1>
 </div>
 
 </header>
@@ -56,20 +56,21 @@
       menu.classList.toggle('open');
     }
 </script>
-
-<div class="timeline">
-    {% for entry in timeline_data %}
-    <div class="container {{ entry.side }}-container">
-        <img src="{{ entry.image_url }}" alt="{{ entry.title }}">
-        <div class="timeline-content">
-            <h2>{{ entry.title }}</h2>
-            <small>{{ entry.date_range }}</small>
-            <p>{{ entry.description }}</p>
-            <p> Resources: <a href="{{ entry.link }}" target="_blank">{{ entry.resource }}</a></p>
-            <small>tags: {{ entry.tags }}</small>
+        {% for feed_item in feed_items %}
+        <div class="project">
+            <div class="contents-block">
+                <div class="contents">
+                    <h2 class="h3">{{ feed_item.title }}</h2>
+                    <div class="metadata">
+                    <div>{{ feed_item.resource }}</div>
+                    <div>
+                        <a href="{{ feed_item.link }}" target="_blank">Read More</a>
+                    </div>
+                </div>
+                    {{ feed_item.description }}
+                    </div>
         </div>
     </div>
     {% endfor %}
-</div>
 </body>
 </html>
