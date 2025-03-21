@@ -25,5 +25,5 @@ jobs:
             sudo git pull
             sudo chmod u+x ./deployment.sh
             sudo ./deployment.sh
-      - name: Sanity check on ec3
+      - name: Sanity check on ec2
         run: curl -s -o /dev/null -w "%{http_code}" https://blog.vizallati.guru/categories?category=aqa | grep -q "^200$" || exit 1
