@@ -3,7 +3,9 @@ import os
 from datetime import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-from app_utils import check_user_auth
+from markupsafe import Markup
+
+from app_utils import check_user_auth, convert_rrs_to_json
 from data import get_timeline_data, add_timeline_entry, get_recent_timeline_entries, add_project_entry, get_projects, \
     get_search_query, add_activity_entry, get_activity_entries
 from loguru import logger
@@ -73,7 +75,13 @@ def get_categories():
         case _:
             return render_template('index.html')
 
-
+@app.route('/articles')
+def articles():
+    json_data = convert_rrs_to_json()
+    logger.info(f"Medium feed data {json_data}")
+    json_data[0]["description"] = json_data[0]["description"].strip()
+    json_data[0]["description"] = Markup(json_data[0]["description"])
+    return render_template('articles.html', feed_items=json_data)
 
 
 
