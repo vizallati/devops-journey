@@ -2,7 +2,7 @@ import hashlib
 import os
 from datetime import datetime
 
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, send_from_directory
 from markupsafe import Markup
 
 from app_utils import check_user_auth, convert_rrs_to_json, summarize_article
@@ -61,6 +61,10 @@ def about():
 @app.route('/other-interests')
 def other_interests():
     return render_template('other-interests.html')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(directory='static', path='sitemap.xml')
 
 @app.route('/categories')
 def get_categories():
