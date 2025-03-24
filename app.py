@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.secret_key = os.urandom(24)
-UPLOAD_FOLDER = './static/images'     #Need to change this when debugging locally
+UPLOAD_FOLDER = '/app/static/images'     #Need to change this when debugging locally
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 DEFAULT_FILTER = 'aqa'
 
