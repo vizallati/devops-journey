@@ -23,7 +23,7 @@ button {
   border-style: solid;
   border-width: 1px;
 }
-a {
+li a {
     color: white;
     font-family: "Source Code Pro", monospace;
 }
