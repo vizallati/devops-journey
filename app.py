@@ -26,7 +26,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 DEFAULT_FILTER = 'aqa'
 app.config["fd"] = None
 app.config["child_pid"] = None
-socketio = SocketIO(app)
+
+socketio = SocketIO(app, cors_allowed_origins=["https://blog.vizallati.guru"])
 
 @app.route('/')
 def home():
