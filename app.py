@@ -26,7 +26,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 DEFAULT_FILTER = 'aqa'
 app.config["fd"] = None
 app.config["child_pid"] = None
-from flask_socketio import SocketIO
 
 socketio = SocketIO(app, cors_allowed_origins=["https://blog.vizallati.guru"])
 
