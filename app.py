@@ -1,7 +1,14 @@
-import hashlib
-import os
 from datetime import datetime
-
+import pty
+import os
+import subprocess
+from flask_socketio import SocketIO
+import select
+import termios
+import struct
+import fcntl
+import shlex
+import logging
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, send_from_directory
 from markupsafe import Markup
 
@@ -17,7 +24,9 @@ app.secret_key = os.urandom(24)
 UPLOAD_FOLDER = '/app/static/images'     #Need to change this when debugging locally
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 DEFAULT_FILTER = 'aqa'
-
+app.config["fd"] = None
+app.config["child_pid"] = None
+socketio = SocketIO(app)
 
 @app.route('/')
 def home():
@@ -151,7 +160,85 @@ def add_activity():
     description = activity_data.get('description')
     activity_date =  datetime.utcnow().date()
     activity_id = add_activity_entry(description, file_path, activity_date)
-    return jsonify({'message': 'Activity added successfully!', 'activity_id': activity_id}), 201
+    return jsonify({'message': 'Activity added successfully!', 'activity_id': activity_id}),
+
+
+
+def set_winsize(fd, row, col, xpix=0, ypix=0):
+    logging.debug("setting window size with termios")
+    winsize = struct.pack("HHHH", row, col, xpix, ypix)
+    fcntl.ioctl(fd, termios.TIOCSWINSZ, winsize)
+
+
+def read_and_forward_pty_output():
+    max_read_bytes = 1024 * 20
+    while True:
+        socketio.sleep(0.01)
+        if app.config["fd"]:
+            timeout_sec = 0
+            (data_ready, _, _) = select.select([app.config["fd"]], [], [], timeout_sec)
+            if data_ready:
+                output = os.read(app.config["fd"], max_read_bytes).decode(
+                    errors="ignore"
+                )
+                socketio.emit("pty-output", {"output": output}, namespace="/playground")
+
+
+@app.route("/playground")
+def playground():
+    return render_template("playground.html")
+
+
+@socketio.on("pty-input", namespace="/playground")
+def pty_input(data):
+    """write to the child pty. The pty sees this as if you are typing in a real
+    terminal.
+    """
+    if app.config["fd"]:
+        logger.debug("received input from browser: %s" % data["input"])
+        os.write(app.config["fd"], data["input"].encode())
+
+
+@socketio.on("resize", namespace="/playground")
+def resize(data):
+    if app.config["fd"]:
+        logger.debug(f"Resizing window to {data['rows']}x{data['cols']}")
+        set_winsize(app.config["fd"], data["rows"], data["cols"])
+
+
+@socketio.on("connect", namespace="/playground")
+def connect():
+    """new client connected"""
+    logger.info("new client connected")
+    if app.config["child_pid"]:
+        # already started child process, don't start another
+        return
+
+    # create child process attached to a pty we can read from and write to
+    (child_pid, fd) = pty.fork()
+    if child_pid == 0:
+        # this is the child process fork.
+        # anything printed here will show up in the pty, including the output
+        # of this subprocess
+        subprocess.run(app.config["cmd"])
+    else:
+        # this is the parent process fork.
+        # store child fd and pid
+        app.config["fd"] = fd
+        app.config["child_pid"] = child_pid
+        set_winsize(fd, 50, 50)
+        cmd = " ".join(shlex.quote(c) for c in app.config["cmd"])
+        # logging/print statements must go after this because... I have no idea why
+        # but if they come before the background task never starts
+        socketio.start_background_task(target=read_and_forward_pty_output)
+
+        logger.info("child pid is " + child_pid)
+        logger.info(
+            f"starting background task with command `{cmd}` to continously read "
+            "and forward pty output to client"
+        )
+        logger.info("task started")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.config["cmd"] = 'bash'
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
