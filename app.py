@@ -241,4 +241,4 @@ def connect():
 
 if __name__ == '__main__':
     app.config["cmd"] = 'bash'
-    socketio.run(app, host='0.0.0.0', port=5002, debug=True)
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
