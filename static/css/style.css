@@ -12,6 +12,11 @@ h2 {
 	font-family: "Source Code Pro", monospace;
 }
 
+h3 {
+	font-family: "Press Start 2P", serif;
+	color: white;
+}
+
 label {
 	font-family: "Source Code Pro", monospace;
 }
@@ -252,6 +257,9 @@ li a {
     justify-content: flex-start;
     z-index: 1000;
 
+}
+.playground-specs {
+	font-family: "Source Code Pro", monospace;
 }
 .open .mobile-menu {
     display: flex;
