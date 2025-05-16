@@ -1,6 +1,6 @@
 Flask==2.2.5
 mysql-connector-python==9.1.0
-loguru==0.7.2
+loguru==0.7.3
 requests==2.32.3
 markupsafe==3.0.2
 flask-socketio==5.1.1
