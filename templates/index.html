@@ -61,11 +61,11 @@
     <div class="homehead">
         <form method="get" class="filter" action="/categories" id="categoryForm">
         <label for="category">Filter by category:</label>
-        <select name="category" id="category" >
-            <option value="activity-feed">Activity Feed</option>
-            <option value="aqa" selected>Test Automation Journey</option>
-            <option value="devops">Devops Journey</option>
-            <option value="projects">Projects</option>
+        <select name="category" id="category">
+            <option value="activity-feed" {% if request.args.get('category') == 'activity-feed' %}selected{% endif %}>Activity Feed</option>
+            <option value="aqa" {% if request.args.get('category', 'aqa') == 'aqa' %}selected{% endif %}>Test Automation Journey</option>
+            <option value="devops" {% if request.args.get('category') == 'devops' %}selected{% endif %}>Devops Journey</option>
+            <option value="projects" {% if request.args.get('category') == 'projects' %}selected{% endif %}>Projects</option>
         </select>
         <button type="submit">Filter</button>
         </form>
@@ -91,6 +91,7 @@
                 <h2>{{ entry.title }}</h2>
                 <small>{{ entry.date_range }}</small>
                 <p>{{ entry.description }}</p>
+                <a href="{{ entry.source_url }}" target=""> Visit Timeline</a>
             </div>
         </div>
         {% endfor %}
@@ -110,12 +111,9 @@
             </div>
                 <p>{{ project.description }}</p>
             </div>
-    </div>
-    <div class="image">
         {% set file_name = project.image_location.split('/')[-1].split('\\')[-1] %}
-        <img src="{{ url_for('static', filename='images/' + file_name) }}" alt="y">
+        <img src="{{ url_for('static', filename='images/' + file_name) }}" alt="{{project.title}}" class="filter-image">
     </div>
-
     {% endfor %}
 {% endif %}
 <div class="search_results">
@@ -125,6 +123,7 @@
                 <h2>{{ entry.title }}</h2>
                 <small>{{ entry.date_range }}</small>
                 <p>{{ entry.description }}</p>
+                <a href="{{ entry.source_url }}" target=""> Visit {{entry.source_type}}</a>
             </div>
         {% endfor %}
     {% endif %}
