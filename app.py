@@ -82,6 +82,7 @@ def get_categories():
     match category:
         case 'aqa' | 'devops':
             timeline_data = get_timeline_data(timeline=category)
+            timeline_data[0]['source_url'] = url_for(f'{category}_timeline')
             return render_template('index.html', timeline_data=timeline_data)
         case 'projects':
             all_project_entries = get_projects()

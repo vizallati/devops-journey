@@ -1,5 +1,6 @@
 from setup_db import establish_connection
 from loguru import logger
+from flask import url_for
 
 def get_timeline_data(timeline):
     try:
@@ -103,7 +104,20 @@ def get_search_query(search_query):
                 WHERE `{column_name}` LIKE %s
             """
             cursor.execute(query, (f'%{search_query}%',))
-            results.extend(cursor.fetchall())
+            rows = cursor.fetchall()
+            for row in rows:
+                match table:
+                    case 'aqa_timeline':
+                        row['source_url'] = url_for('aqa_timeline')
+                        row['source_type'] = 'Timeline'
+                    case 'devops_timeline':
+                        row['source_url'] = url_for('devops_timeline')
+                        row['source_type'] = 'Timeline'
+                    case 'projects':
+                        row['source_url'] = url_for('projects')
+                        row['source_type'] = 'Projects'
+            results.extend(rows)
+            logger.info(results)
         cursor.close()
         connection.close()
         return results

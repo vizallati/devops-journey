@@ -36,6 +36,11 @@ li a {
     margin-top: 10px;
     margin-left: 5px;
 }
+.filter-image {
+    width: 280px;
+    height: 200px;
+
+}
 .timeline {
 	position: relative;
 	max-width: 1200px;
@@ -155,6 +160,7 @@ li a {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	border-bottom-style: outset;
 }
 .articles {
 	background: white;
@@ -314,6 +320,25 @@ li a {
 		margin-top: 18px;
 
 	}
+	.result-items {
+        background: white;
+        padding: 20px 30px;
+        border-radius: 6px;
+        margin: 5px;
+        width: auto;
+        font-size: 15px;
+        font-family: "Source Code Pro", monospace;
+    }
+	.contents-block {
+        width: 60%;
+        margin-left: 20px;
+    }
+
+    .image {
+        padding: 20px;
+        width: 40%;
+        margin-left: 50px;
+    }
 
 	.project {
 		background: white;
@@ -321,6 +346,7 @@ li a {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		border-bottom-style: outset;
 	}
 
 	.image img {
@@ -329,6 +355,12 @@ li a {
 		margin-left: -70px;
 		float: right;
 	}
+
+	.filter-image {
+        width: 120px;
+        height: 120px;
+    }
+
 	.contents p {
 	    width: 220px;
 	}
