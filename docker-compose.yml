@@ -54,7 +54,7 @@ services:
       - le_pond
 
   fluentd:
-    build: ./fluentd
+    build: monitoring/fluentd
     volumes:
       - ./fluentd/conf:/fluentd/etc
     depends_on:
@@ -82,6 +82,37 @@ services:
       - elasticsearch
     ports:
       - "5601:5601"
+    networks:
+      - le_pond
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - cadvisor
+    networks:
+      - le_pond
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    command:
+      - "--port=8445"
+    ports:
+      - "8445:8445"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - web_app
     networks:
       - le_pond
 
